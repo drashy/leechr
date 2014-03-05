@@ -1,0 +1,182 @@
+#
+# Leechr - <http://ashysoft.wordpress.com/>
+#
+# Copyright 2008-2014 Paul Ashton <drashy@gmail.com>
+#
+# This file is part of Leechr.
+#
+# Leechr is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# Leechr is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Leechr.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+########################################################################
+# NOTE:
+# This file is automatically downloaded, any changes you make will be overwritten.
+# Please submit any changes to the Leechr website so everyone can benefit :)
+#                   http://ashysoft.wordpress.com/
+########################################################################
+
+HELPERS_DAT_VERSION = 49
+LEECHR_REQ_VERSION = "0.7.1"
+
+# Help the search out a bit
+SEARCH_HELPERS = {
+u"\xa1Rob!":"-robbed -robin -robots",
+u"24":"!german",
+u"Ashes to Ashes":"!sing",
+u"The Beast (2009)":"!beauty",
+u"Clone":"!wars",
+u"CSI: Crime Scene Investigation":"!miami !york",
+u"Gladiators (2008)":"!american",
+u"Heroes":"!unmasked",
+u"House":"!housewives !payne !dollhouse !warehouse",
+u"Hustle":"!real",
+u"Lie To Me":"!charlie",
+u"Psych":"!psychoville",
+u"Rush (2008)":"!sugar",
+u"The Walking Dead":"!inside",
+u"The X Factor (UK)":"!xtra"
+}
+
+LOCAL_FILTERS = {
+#    'Name'         [Req, Filter]
+u'60 Minutes (US)':[[], ['au']]     #don't want aussie version
+}
+
+# and give better show names...
+ALT_SHOW_NAMES = {
+u"\xa1Rob!":["Rob"],
+u"$#*! My Dad Says":['Shit My Dad Says'],
+u"@Midnight":["At Midnight"],
+u"18 Kids and Counting":["19 Kids and Counting"],
+u'60 Minutes (US)':['60 Minutes'],
+u"Archer (2009)":["Archer"],
+u"The Beast (2009)":["The Beast"],
+u"The Colony (US)":["The Colony"],
+u"CSI: Crime Scene Investigation":["CSI"],
+u"CSI: NY":["CSI NY", "CSI New York"],
+u"Dragon's Den (UK)":["Dragons Den"],
+u"Eleventh Hour (US)":["Eleventh Hour"],
+u"Flash Forward (2009)":["Flash Forward"],
+u"Late Night with Jimmy Fallon":["Jimmy Fallon"],
+u"Late Night with Seth Meyers":["Seth Meyers"],
+u"Law & Order: Criminal Intent":["Law and Order Criminal Intent", "Law and Order CI"],
+u"Law & Order: Special Victims Unit":["Law and Order SVU"],
+u"Life (UK)":["Life 2009"],
+u"Life on Mars (US)":["Life on Mars"],
+u"Merlin (2008)":["Merlin"],
+u"Revolution (2012)":["Revolution"],
+u"Rush (2008)":["Rush"],
+u"Spartacus: Blood and Sand":["Spartacus"],
+u"Star Wars: The Clone Wars (2008)":["Star Wars The Clone Wars"],
+u"The Pete Holmes Show":["Pete Holmes"],
+u"The Real Hustle (UK)":["The Real Hustle"],
+u"The Secret Diary of a Call Girl":["Secret Diary of a Call Girl"],
+u"The Tonight Show Starring Jimmy Fallon":["Jimmy Fallon"],
+u"The Tonight Show with Conan O'Brien":["Conan"]
+}
+
+#Ignore results with these words in them...
+BANNED_WORDS = [
+u".exe",
+u".ts",
+u"448kbps",
+u"dubbed",
+u"dutch",
+u"french",
+u"german",
+u"mpeg",
+u"nlsub",
+u"password",
+u"ps3",
+u"preair",
+u"pre-air",
+u"subbed",
+u"screener",
+u"vostfr",
+u"tvs presents",
+u"iphone",
+u"ipod",
+u"ita",
+u"itouch"
+]
+
+#Shift shows that are not numbered correctly.. (season start, ep start, season end, ep end, season shift, ep shift)
+SEASON_EP_SHIFT = {
+u"Anthony Bourdain: No Reservations":[(6, 1, 6, 20, +1, 0)], # S06E01-S06E20 > S07E01-S07E20
+u"America\'s Next Top Model":[(12, 3, 12, 14, 0, -1)], # S12E03-S12E014 > S12E02-S12E013
+u"Flashpoint":[(1, 10, 1, 13, +1, -9)], # S01E10-S01E13 > S02E01-S02E04
+u"Good Eats":[(13, 1, 13, 20, -1, 16)], # S13E01-S13E20 > S12E17-S12E37
+
+u"MythBusters":[( 9, 1,  9,  12, -1, +17),  # S09E01..12  > S08E18..29
+                (10, 1, 10,  12, -1,   0),  # S10E01..12  > S09E01..12
+                (11, 1, 11,  10, -2, +12),  # S11E01..10  > S09E13..22
+                (12, 1, 12,  13, -2,   0),  # S12E01..12  > S10E01..12
+                (13, 1, 13,   8, -2,   0),  # S13E01..08  > S11E01..08
+                (13, 9, 13, 100, -1,  -8)], # S13E09..100 > S12E01..92
+
+u"The Little Couple":[(2, 3, 2, 17, 0, -2)], # S02E03-S02E17 > S02E01-S02E15
+u"The Sarah Silverman Program":[(2, 7, 2, 16, +1, -5)], # S02E07-S02E16 > S03E01-S03E10
+u"Warehouse 13":[(1, 2, 1, 13, 0, +1)] #S01E02-S01E13 > S01E03-S01E14
+}
+
+# Shows that are released with dates instead of episode numbers
+DAILY_SHOWS = [
+u"@Midnight",
+u"60 Minutes (US)",
+u"Conan",
+u"Jimmy Kimmel Live",
+u"Last Call with Carson Daly",
+u"Late Night with Conan O\'Brien",
+u"Late Night with Jimmy Fallon",
+u"Late Night with Seth Meyers",
+u"Late Show with David Letterman",
+u"Real Time With Bill Maher",
+u"The Colbert Report",
+u"The Daily Show",
+u"The Late Late Show with Craig Ferguson",
+u"The Pete Holmes Show",
+u"The Soup",
+u"The Tonight Show Starring Jimmy Fallon",
+u"The Tonight Show with Conan O'Brien",
+u"The Tonight Show with Jay Leno"
+]
+
+# Shows that are released with episode-names instead of episode-numbers
+NAMED_SHOWS = [
+u"Horizon",
+u"Nature",
+u"NOVA"
+]
+
+# Search results must match this or be removed
+REMATCH = {
+u'Mad':r'Mad[. ]S?\d{1,2}[EX]\d{2}',
+u"Rev":r"Rev[. ]S?\d{1,2}[EX]\d{2}(?i)",
+u"V (2009)":r"V[. ]\(?2009\)?[. ]S?\d{1,2}[EX]\d{2}(?i)"
+}
+
+# Shows that are only broadcast in SD
+SD_SHOWS = [
+u"A Comedy Roast",
+u"Grow Your Own Drugs",
+u"Horizon",
+u"Masterchef Australia",
+u"QI",
+u"Spirited",
+u"The Inbetweeners",
+u"The X Factor (UK)",
+u"You Have Been Watching"
+]
+
+

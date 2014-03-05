@@ -1,0 +1,431 @@
+Leechr (c)2008-2014 Paul Ashton
+http://ashysoft.wordpress.com
+
+Changelog:
+v0.7.2 - Released 05 Mar 2014
+ o Fixed NZBClub module (feed URL change) (Issue 120)
+ o helpers v49 changes: (Issue 119)
+     alt-names + dailies > added 'The Tonight Show Starring Jimmy Fallon'
+     alt-names + dailies > added 'Late Night with Seth Meyers'
+     alt-names + dailies > added 'The Pete Holmes Show'
+     alt-names + dailies > added '@Midnight'
+
+
+v0.7.1 - Released 17 May 2013
+ + Added helpers for 'MythBusters' crazy episode shifting
+ + Added helpers for '$#*! My Dad Says', '60 Minutes (US)'
+ o Fixed crash on exit
+ o Various other fixes
+
+
+v0.7 - Released 16 May 2013
+ + Added support for local(or not so local) Newznab+ site. (Issue 104)
+   Set LOCALNEWZNAB_URL and LOCALNEWZNAB_APIKEY in your conf.
+
+ + Leechr will now store hashes instead of nzb-urls/article-nums.
+   I recommend you delete current leechr.dat file.
+
+ + Leechr now prioritises new shows over shows it has previously searched for.
+ o Fixed daily shows being ignored. (Issue 112)
+
+
+v0.6.3 - Released 15 May 2013
+ o Fixed another NZBs.org module crash
+
+
+v0.6.2 - Released 14 May 2013
+ o Fixed crash when using Python 2.6
+ o Fixed NZBs.org module crash
+
+
+v0.6.1 - Released 10 May 2013
+ o Fixed updater
+
+
+v0.6 - Released 10 May 2013
+ + Added NZBNDX.com support. (set NZBNDXCOM_APIKEY in conf)
+ + Added Newshost.co.za support.
+ + Added Sickbeard.com support.
+ + Added NZBx.co support.
+ + Added NZB.cc support. (Issue 99)
+ + Added Usenet-Crawler.com support. (set USENETCRAWLERCOM_APIKEY in conf)
+ + Leechr now remembers broken NZBs/DMCA takedowns and doesn't try to regrab them
+ o Added two more .mp4 header types (Issue 100)
+ o Fixed RAR header \x01 bug in some files
+ o Fixed broken episode shifting
+ o Various other fixes and performance tweaks
+ x Removed NZBMatrix support
+ x Removed Newsleech support
+ o helpers.dat changes:
+   v47 (10 May 2013)
+       rematch > Added 'Rev'
+       alt-names > Added 'Revolution'
+       banned-words > Added 'ita' (italian releases)
+
+
+v0.5.1 (with helpers.dat v46) - Released 13 Jun 2012
+ - Fixed xvid retrieval
+
+
+v0.5 (with helpers.dat v46) - Released 12 Jun 2012
+ - Fixed NZBs.org support. (use the api instead of rss now, you need to set the NZBS_APIKEY) (Issue 97 - thanks DaSchug)
+ - Fixed NZBMatrix support. (Issue 96 - Thanks hey.areth)
+ - Added support for new .mp4 releases (Issue 95 - Thanks kusskowe)
+ - Leechr will no longer stop using the last module even if it fails.
+ - helpers.dat changes:
+   v46 (12 Jun 2012):
+       alt-names > Added 'Rob' (Issue 94)
+       alt-names > Added 'Spartacus' (Issue 93)
+       search-helpers > Added 'Rob' (Issue 94)
+       search-helpers > Added 'Psych' (Issue 89)
+
+
+v0.4.8.7.2 (with helpers.dat v44) - Released 15 Dec 2010
+ - Fixed crash when Leechr could not contact the usenet server, really this time ;)
+
+
+v0.4.8.7.1 (with helpers.dat v44) - Released 14 Dec 2010
+ - Fixed crash when Leechr could not contact the usenet server.
+ - helpers.dat changes:
+   v44 (14 Dec 2010):
+       daily-shows > Added 'Conan'
+
+
+v0.4.8.7 (with helpers.dat v43) - Released 13 Dec 2010
+ - Added support for SSL connection to Usenet (see example.conf for details)
+ - Fixed bug with missing segments
+ - Fixed NZBClub module after their site changes.
+ - Fixed: Usenet connections now close after article retrieval.
+ - helpers.dat changes:
+   v43 (13 Dec 2010):
+       sd-shows > removed 'Family Guy' as it is now broadcast in HD as well
+
+
+v0.4.8.6.3 (with helpers.dat v42) - Released 1 Nov 2010
+ - Fixed exception crashing.
+
+
+v0.4.8.6.2 (with helpers.dat v42) - Released 31 Oct 2010
+ - Fixed crashing when no results found by any searcher.
+
+
+v0.4.8.6.1 (with helpers.dat v42) - Released 30 Oct 2010
+ - Fixed bug with NZBMatrix and NZBs modules reporting errors, my bad :D
+
+
+v0.4.8.6 (with helpers.dat v42) - Released 28 Oct 2010
+ - Leechr now checks content of .avi and .mkv files.
+ - Dashes will now be removed from show names when searching with NZBMatrix.
+ - Added NZBs.org support (untested as I do not have an account, can anyone help me out?)
+ - helpers.dat changes:
+   v42 (28 Oct 2010):
+       sd-shows > added 'The Inbetweeners'
+
+
+v0.4.8.5 (with helpers.dat v41) - Released 18 Oct 2010
+ - Leechr now checks for valid video files rather than passworded archives.
+ - Added support for NZBMatrix.com
+ - Fixed bugs in the rar processing, rewrote it all ;)
+ - helpers.dat changes:
+   v41 (18 Oct 2010):
+       search-helpers > 'The X Factor (UK)' > added '!xtra'
+       sd-shows > added 'The X Factor (UK)'
+       sd-shows > added 'Spirited'
+
+
+v0.4.8.4 (with helpers.dat v40) - Beta release only
+ - Leechr now checks NZB files for passworded content, no more bad downloads!
+ - Added LOGDIR variable to config.
+ - Added format-timeouts (get SD if HD is not available for x days or x attempts and vice versa), see example.conf for details
+ - Added option to save NZBs into show-name subdirs.
+ - Added 'alt.binaries.teevee' to list of allowed download groups.
+ - Added FILESIZE_LIMIT option (see example.conf)
+ - Added option to use scene-names (if available) for nzb filenames.
+ - Fixed some potential problems with missing files.
+ - Upgraded BeautifulSoup.py to v3.0.8.1
+ - helpers.dat changes:
+   v40 (27 Jul 2010):
+       new section SD_SHOWS, lists shows that are only broadcast in SD so leechr doesn't bother searching for HD versions of them.
+       search-helpers > 'Ashes to Ashes' > added '!sing'
+       search-helpers > 'House' > added '!housewives !dollhouse !warehouse'
+   v39 (18 Mar 2010):
+       search-helpers > 'House' > added '!payne'
+   v38 (15 Feb 2010):
+       alt-names > '18 Kids and Counting' > added '19 Kids and Counting'
+       ep-shift > 'The Little Couple' > added S02E03-S02E17 > S02E01-S02E15
+
+
+v0.4.8.3 (with helpers.dat v37) - Released 09 Feb 2010
+ - Changed default GET_HD_VIDEO setting to False.
+ - Added some checks for old config settings.
+ - Added AUTOMARK_ACQUIRE back in since some people are still using it.
+ - helpers.dat changes:
+   v37 (06 Feb 2010):
+       alt-names > 'The Real Hustle (UK)' > added 'The Real Hustle'
+   v36 (03 Feb 2010):
+       alt-names > 'The Secret Diary of a Call Girl' > added 'Secret Diary of a Call Girl'
+
+
+v0.4.8.2 (with helpers.dat v35) - Released 03 Feb 2010
+ - Added support for bintube.com
+ - Redone the whole SD/HD thing, see example.conf for details.
+ - Fixed Search module failures should now not kill the script.
+ - Fixed NZBClub module after they changed ids and urls.
+ - Fixed bug with shifted episodes not being set as aquired on myeps.
+ - Other stuff I've forgotten about.
+ - Added DIR_STARTWITH to funkyfilemover tool.
+ - helpers.dat changes:
+   v35 (03 Feb 2010):
+       ep-shift > "Anthony Bourdain: No Reservations" > Shift season 6 to season 7
+       named-shows > added "Horizon".
+       banned-words > added "password".
+       alt-names > 'Archer (2009)' > added 'Archer'.
+       alt-names > 'Merlin (2008)' > added 'Merlin'.
+
+
+v0.4.8.1 (with helpers.dat v34) - Released 03 Jan 2010
+ - Fixed crash with incomplete/corrupt timestamp from NZBClub feed.
+
+
+v0.4.8 (with helpers.dat v34) - Released 04 Dec 2009
+ - Added auto-update, no more manual upgrades, yay! (run main.py if you don't want updates, including updates to helpers.dat)
+ - Added search by episode-format '1x01' if no results are found for 'S01E01'
+ - Added command line features, try "python leechr.py --help" for details.
+ - Added random User-Agent string.
+ - Added IGNORE_EPISODES_OLDER_THAN option, check example.conf for details.
+ - Unicode errors should be fixed (yet again!)
+ - Added helpers.dat filter, REMATCH, shows must match the expression.
+ - Tidied up some of the code
+ - Removed Newzleech from search modules (until they get their site fixed)
+ - helpers.dat changes:
+   v34 (04 Dec 2009):
+       Removed Alt-Names for 'Greek', 'John Safrans Race Relations', 'Krod Mandoon', 'Reno 911' and 'The Chasers War on Everything' > No longer needed.
+       Added REMATCH section and added re for 'V (2009)'
+   v33 (15 Nov 2009):
+       alt-names > 'John Safran's Race Relations' > added 'John Safrans Race Relations'
+   v32 (15 Oct 2009):
+       alt-names > 'Life (UK)' > added 'Life 2009'
+
+
+v0.4.7.1 (with helpers.dat v31) - Realeased 08 Oct 2009
+ - Leechr will now strip out any sample files from NZBs, saving you bandwidth and download time!
+ - Changed result ranking, 'efnet' posts will now be preferred, should cure most passworded-download problems.
+ - Fixed no-results bug with NZBIndex module
+ - Fixed index out of range crash when computing sizes
+ - helpers.dat changes:
+   v31 (07 Oct 2009):
+       banned-words > added 'ipod'
+       banned-words > added 'itouch'
+       banned-words > added '.mp4'
+       search-helpers > 'Lie To Me' > added '!charlie'
+
+v0.4.7 (with helpers.dat v30) - Released 03 Oct 2009
+ - Added more search modules, searches will now use Newzleech, NZBClub and NZBIndex. (Many thanks to Rick Pass for all his hard work)
+ - Removed acquired.log functionality, it was no longer needed.
+ - helpers.dat changes:
+   v30 (03 Oct 2009):
+       banned-words > added 'tvs presents'
+       banned-words > added 'iphone'
+   v29 (02 Oct 2009):
+       alt-names > 'Law & Order: Special Victims Unit' > added 'Law and Order SVU'
+       daily-shows > added 'Real Time With Bill Maher'
+       named-shows > added 'Nature'
+
+
+v0.4.6.3 (with helpers.dat v28) - Released 03 Sep 2009
+ - Fixed crash with missing acquired.log.
+ - Fixed crash with running Leechr from a directory other than its own.
+ - helpers.dat changes:
+   v28 (03 Sep 2009):
+       alt-names > 'Flash Forward (2009)' > added 'Flash Forward'
+       alt-names > 'Rush (2008)' > added 'Rush'
+       search-helper > 'Rush (2008)' > added '!sugar'
+   v27 (13 Aug 2009):
+       alt-names > 'The Colony (US)' > added 'The Colony'
+
+
+v0.4.6.2 (with helpers.dat v26) - Released 30 Jul 2009
+ - Fixed crash with empty episode-name detection.
+ - Fixed unicode filename crash.
+ - Slashes in show names will now be converted to spaces for searching.
+ - Fixed crash when loading empty/corrupt files.
+ - helpers.dat changes:
+   v26 (17 Jul 2009):
+       alt-names > 'Dragon's Den (UK)' > Added 'Dragons Den'.
+   v25 (17 Jul 2009):
+       ep-shift > 'Warehouse 13' > S01E02-S01E13 > S01E03-S01E14
+   v24 (25 Jun 2009):
+       ep-shift > 'The Secret Life of the American Teenager' > entry removed
+   v23 (16 Jun 2009):
+       banned-words > added 'mpeg'
+   v22 (12 Jun 2009):
+       alt-names > 'Reno 911!' > added 'Reno 911'
+       alt-names > 'The Tonight Show with Conan O'Brien' > added 'Conan'
+       daily-shows > added 'The Tonight Show with Conan O'Brien'
+   v21 (12 Jun 2009):
+       alt-names > 'The Chaser’s War on Everything' > added 'The Chasers War on Everything'
+   v20 (08 May 2009):
+       ep-shift > 'Good Eats' > S13E01-S13E20 > S12E17-S12E37
+   v19 (29 Apr 2009):
+       daily-shows > added 'Late Night with Jimmy Fallon'
+       alt-names > 'Late Night with Jimmy Fallon' > added 'Jimmy Fallon'
+       banned-words > added 'vostfr'
+   v18 (29 Apr 2009):
+       alt-names > 'Law & Order: Criminal Intent' > added 'Law and Order Criminal Intent' and 'Law and Order CI'
+   v17 (13 Apr 2009):
+       alt-names > 'Kröd Mändoon and the Flaming Sword of Fire' > added 'Krod Mandoon' (seems it disappeared in v16 somehow ;)
+
+
+v0.4.6 (with helpers.dat v16) - Released 10 Apr 2009
+ - Removed exclamation marks from show names.
+ - Fixed another unicode bug *sigh*
+ - Added named-shows, check helpers.dat v16 changes for info.
+ - helpers.dat changes:
+   v16 (10 Apr 2009):
+       Added new section called NAMED_SHOWS for shows that are released with ep-name instead of number.
+       named-shows > added 'NOVA'
+       alt-names > removed 'American Dad!', no longer required.
+   v15 (10 Apr 2009):
+       alt-names > 'Kröd Mändoon and the Flaming Sword of Fire' > added 'Krod Mandoon'
+   v14 (06 Apr 2009):
+       shift-range > 'America's Next Top Model'
+       daily-shows > added 'The Soup'
+   v13 (30 Mar 2009):
+       alt-names > 'American Dad!' > added 'American Dad'
+
+
+v0.4.5 (with helpers.dat v12) - Released 07 Mar 2009
+ - Fixed logging bug with unicode chars.
+ - Added DAYS_EARLY to conf, allows you to specify how many days results are allowed before air-date. (default is 2.0)
+
+
+v0.4.4 (with helpers.dat v11) - Released 16 Feb 2009
+ - Changed helpers.dat update system, fixes problems with cached downloads and silly google code site.
+
+
+v0.4.3 (with helpers.dat v11) - Released 15 Feb 2009 and removed 5 minutes later :D
+ - Added multi-search for alt-show-names. Leechr will now search each alt-name.
+ - Added support for 'daily shows'. Leechr will search by date instead of episode number.
+ - Added two new scripts for sorting/moving your eps, check 'tools' folder.
+ - Fixed a timezone crash with post-age.
+ - Fixed unicode encoding crashes in leechr and mark-all script.
+ - Fixed max-age detection bug.
+ - helpers.dat changes:
+   v11 (15 Feb 2009):
+       Added a new section 'DAILY_SHOWS' for shows that are released by date instead of episode number.
+       Changed format of ALT_SHOW_NAMES, shows can now have more than one alt-name.
+   v10 (09 Feb 2009):
+       alt-name > 'Life on Mars (US)' > added 'Life On Mars'.
+
+
+v0.4.2 (with helpers.dat v9) - Released 05 Feb 2009
+ - Results from before the show air-date are now ignored.
+ - Added Retention Limit to leechr.conf, any results older than this will be ignored.
+ - Added some http headers when opening urls, should cure caching problems while updating.
+ - Some characters are now automatically removed from show names while searching.
+ - helpers.dat changes:
+   v9 (05 Feb 2009):
+       search-helpers > 'House' > removed !full (causing problems)
+       search-helpers > '24' > added !german (damn germans post too much crap)
+       alt-names > 'Grey's Anatomy' > entry not required, quotes automatically removed.
+       banned words > added dutch, german and dubbed
+   v8 (02 Feb 2009):
+       alt-names > 'Star Wars: The Clone Wars (2008)' > added 'Star Wars The Clone Wars'
+   v7 (30 Jan 2009):
+       search-helper > 'The Beast (2009)' > added '!beauty'
+       alt-name > 'The Beast (2009)' > added 'The Beast'
+
+
+v0.4.1 (with helpers.dat v6) - Released 23 Jan 2009
+ - Changed helpers.dat update hash-check from MD5 to SHA1 (google automatically generates SHA1)
+ - Added helpers.dat version number display when loading it.
+ - Shifting notification moved to Search line. (was ugly before ;)
+ - Tidied up some code and added more debugging info.
+ - helpers.dat changes:
+   v6 (23 Jan 2009):
+       alt-names > 'Grey's Anatomy' > added 'Greys Anatomy'
+   v5 (22 Jan 2009):
+       search-helper > 'Heroes' > added '!unmasked'
+       search-helper > 'Hustle' > added '!real'
+   v4 (20 Jan 2009):
+       shift-range > 'The Sarah Silverman Program' > changed range to end of season 2
+   v3 (20 Jan 2009):
+       shift-range > 'The Secret Life of the American Teenager' > stop shifting, they've fixed their numbering.
+   v2 (20 Jan 2009):
+       search-helper > 'House' > added !wives
+
+
+v0.4 (with helpers.dat v1) - Released 18 Jan 2009
+ - Added season/ep shifting, so we can still grab shows if release season/ep numbers do not match myeps. (Sarah Silverman/American Teenager)
+ - Moved search-helpers, alternate show names, banned words and season/ep shifts into 'helpers.dat'.
+ - Updates to 'helpers.dat' will now be downloaded automatically (no more releasing new versions of Leechr just for a show change! yay!)
+
+
+v0.3.3 - Released 18 Jan 2009
+ - Added search-helper for 'Gladiators (2008)' so it won't grab 'American Gladiators (2008)'.
+
+
+v0.3.2 - Released 16 Jan 2009
+ - Fixed bug with 'acquired' marking when alternate-shownames were used. (oops!)
+ - Config file will now be read from Leechr script dir instead of current working dir.
+ - Rearranged comments in config file to help with long lines wrapping.
+
+
+v0.3.1 - Released 08 Jan 2009
+ - Results are now only allowed from a select few groups (currently only: a.b.tv, a.b.tvseries, a.b.mm, a.b.hdtv, a.b.hdtv.x264).
+ - Redone system for alternative show-names and search-helpers.
+ - Should now ignore 'PS3' encodes. Get a real media player guys ;)
+ - Should now ignore subbed/nlsub releases.
+ - Switched from MD5 module to hashlib as MD5 module is deprecated.
+ - Fixed character encoding crash problem temporarily.
+
+
+v0.3 - Released 18 Dec 2008
+ - Finally! Leechr can now automatically mark your episodes on MyEpisodes.com as 'Acquired' but..
+ - Leechr now requires your actual password instead of the MD5 hash.
+ - First-time setup is now quicker/easier thanks to 'mark_all_acquired.py' script. (See the readme)
+ - Fixed 'Greek' search results.
+ - Fixed crashing with shows with unicode characters in their name.
+ - Filtered out some characters that would result in an invalid filename.
+
+
+v0.2.5 - Released 13 Dec 2008
+ - Fixed 'CSI', 'CSI: NY' and 'Eleventh Hour' search results.
+
+
+v0.2.4 - Released 11 Dec 2008
+ - Searching 'House' will now not grab 'Full House' episodes. Please let me know of any other shows Leechr gets wrong!
+ - Fixed a typo-bug in the result-scoring ;)
+ - Posts in 'alt.binaries.korea' will now be demoted, sorry Korea but your group is full of incompletes without pars.
+
+
+v0.2.3 - Released 09 Dec 2008
+ - Fixed a bug with invalid characters in NZB filenames, doh!
+
+
+v0.2.2 - Released 09 Dec 2008
+ - Fixed a potential config file loading problem
+ - Leechr will now keep trying to contact myeps/newzleech until it gets a response (can be turned off in leechr.conf)
+ - Logging can now be enabled. See LOGGING in leechr.conf
+ - Show names and ep numbers are now displayed before attempting to search for them.
+ - You can now ignore shows. See IGNORE_SHOWS in leechr.conf
+ - Leechr now checks for an updated version of itself when it starts up.
+ - Leechr will now keep track of acquired shows so it doesn't try to download the same shows again. (You should still tell MyEps that they are acquired though or problems will arise)
+ - New result-scoring system, should now get the best version of the episode that is available.
+
+
+v0.2.1 - Released 06 Dec 2008
+ - Added exception handling, timeouts will now not kill the script
+ - Added more error checking
+ - Added a 30 second timeout to any URL request
+
+
+v0.2 - Released 05 Dec 2008
+ - Fixed decoding bug in show names coming from myeps
+ - Moved settings into its own file (leechr.conf)
+ - Better search results by adding 'XviD' to any non-720p search
+ - Fixed choosing a 'proper' XviD release over a non-'proper' 720p one and vice versa
+
+
+v0.1 beta
+ - Initial testing release (not public)
