@@ -1,7 +1,13 @@
-Leechr (c)2008-2014 Paul Ashton
+Leechr (c)2008-2015 Paul Ashton
 http://ashysoft.wordpress.com
 
 Changelog:
+v0.8 - Released 14 Jul 2015
+ + Rewrote NZBClub module to work with new site (v2.6.11)
+ o Disabled all other modules as they are outdated and do not work.
+ o Allowed Groups has been replaced by Banned Groups.
+
+
 v0.7.2 - Released 05 Mar 2014
  o Fixed NZBClub module (feed URL change) (Issue 120)
  o helpers v49 changes: (Issue 119)

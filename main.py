@@ -4,7 +4,7 @@
 # Leechr
 # http://ashysoft.wordpress.com
 #
-# Copyright 2008-2014 Paul Ashton <drashy@gmail.com>
+# Copyright 2008-2015 Paul Ashton <drashy@gmail.com>
 #
 # This file is part of Leechr.
 #
@@ -29,8 +29,8 @@
 #                               ...Thanks guys :)
 
 __author__ = "Paul Ashton (drashy@gmail.com)"
-__version__ = "0.7.2"
-__copyright__ = "Copyright (c) 2008-2014 Paul Ashton"
+__version__ = "0.8"
+__copyright__ = "Copyright (c) 2008-2015 Paul Ashton"
 __license__ = "GNU GPL v3+"
 
 import hashlib
@@ -55,15 +55,16 @@ except ImportError:
 
 
 # Defines
-LEECHR_VERSION = u'0.7.2'
+LEECHR_VERSION = u'0.8'
 DEBUG = False
 
 RETRY_TIME = 5 # don't want to flood search engines :)
 RETRY_LIMIT = 2 # retry 2 times, if its still not working then the site is down and pointless to keep trying :)
 MINIMUM_POST_SIZE = 100 # MB
 MINIMUM_POST_SIZE_720P = 200 # MB
-ALLOWED_GROUPS = ["alt.binaries.tv", "alt.binaries.tvseries", "alt.binaries.multimedia", "alt.binaries.hdtv", "alt.binaries.hdtv.x264", "alt.binaries.teevee"]
-SEARCH_MODULES = ["LOCALNEWZNAB", "NZBCC", "NZBCLUBCOM", "NZBXCO", "NEWSHOSTCOZA", "SICKBEARDCOM", "NZBSORG", "NZBNDXCOM"]#, "NZBINDEXNL", "BINSEARCHINFO"] # In order of preference
+#ALLOWED_GROUPS = ["alt.binaries.tv", "alt.binaries.tvseries", "alt.binaries.multimedia", "alt.binaries.hdtv", "alt.binaries.hdtv.x264", "alt.binaries.teevee"]
+BANNED_GROUPS = []
+SEARCH_MODULES = ["LOCALNEWZNAB", "NZBCLUBCOM"]#, "NZBXCO", "NEWSHOSTCOZA", "SICKBEARDCOM", "NZBSORG", "NZBNDXCOM"]#, "NZBINDEXNL", "BINSEARCHINFO"] # In order of preference
 SEARCH_MODULES_OFFLINE = []
 EPISODE_FORMATS = ["S%.2dE%.2d", "%dx%.2d"]
 EPISODE_TIMEOUTS = [] #[show_name, season_num, episode_num, attempts]
@@ -657,7 +658,7 @@ def process_nzb(data, unwanted_files):
 
 
 def striphtmlentities(html):
-  entities = {'&nbsp;':' ', '&quot;':'\'', '&lt;':'<', '&gt;':'>', '\t':''}
+  entities = {'&nbsp;':' ', '&quot;':'\'', '&lt;':'<', '&gt;':'>', '\t':'', '<strong>':'', '</strong>':''}
   for e in entities:
     html = html.replace(e, entities[e])
   return html
@@ -843,14 +844,14 @@ def filterResults(resList, maxAge, showdetails, HD):
     if " " in item[3]:
       groups = item[3].split(" ")
     #debug("groups='%s'" % groups)
-    groupcheck = False
+    groupcheck = True
     for group in groups:
-      if group in ALLOWED_GROUPS + ['leechr']: # 'leechr' group always allowed
-        groupcheck = True
+      if group in BANNED_GROUPS:
+        groupcheck = False
         break
     if not groupcheck:
       resList.remove(item)
-      debug("REMOVED - BAD GROUP '%s'" % item[3])
+      debug("REMOVED - BANNED GROUP '%s'" % item[3])
       continue
 
 
@@ -1189,14 +1190,15 @@ class NZBSORG(searchmodule):
 ########################################################################
 class NZBCLUBCOM(searchmodule):
   """
-  NZBCLUBCOM module v2 by Ashy
+  NZBCLUBCOM module v3 by Ashy
+  14 Jul 2015 - Rewritten to work with new site design (v2.6.11)
   05 Mar 2014 - Updated feed URL
   06 Dec 2010 - NZBClub decided to change their api so heres the new module - Ashy.
   03 Oct 2009 - Initial Release
   """
   FRIENDLY_NAME = "nzbclub.com"
-#  DOWNLOAD_URL = "%s"
-  RSS_BASE_URL = "http://www.nzbclub.com/nzbfeeds.aspx?ss=%s"
+  DOWNLOAD_URL = "http://www.nzbclub.com/nzb_get/{0}"
+  RSS_BASE_URL = "http://www.nzbclub.com/search.aspx?q=%s" # "http://www.nzbclub.com/nzbfeeds.aspx?ss=%s"
   NOT_CHAR = "-"
   ERR_MSGS = ['Too Many Hit. Please slow down.']
   SLEEP_TIME_SEARCH = 7
@@ -1204,59 +1206,32 @@ class NZBCLUBCOM(searchmodule):
 
   def search(self, query, extra):
     """ Search and return the results """
-    items = self.init_search(query)
-    if not items:
+    html = self.init_search(query, mode='RAW')
+    if not html:
       return []
 
-    #Make a nicer and duplicate free result list
-    resultList = []
-    for r in items:
-      downloadName = striphtmlentities(decodeHTML(r.title.string))
-      description = decodeHTML(r.description.string)
-
-      debug("downloadName='%s'" % downloadName)
-      debug("desc='%s'" % description)
-      debug("r.pubdate.string='%s'" % r.pubdate.string)
-      debug("r.link.string = '%s'" % r.link.string)
-
+    results = []
+    items = re.findall(r"<div class=\"panel-body label-menu-corner bg-light.*?\">(.*?)votedown.*?</div>\r\n</div>", html, flags=re.DOTALL)
+    for item in items:
+      if '<a class="text-muted"' in item:
+        continue # We don't want 'muted' items (they have been flagged as password etc)
       try:
-        # Get group
-        tmp = re.findall(r"Newsgroup: (\S*)", description)
-        if not tmp: raise Exception("'downloadGroup' not found")
-        downloadGroup = tmp[0]
-        debug("downloadGroup = '%s'" % downloadGroup)
-
-        # Get size in MB
-        tmp = re.findall(r"Size: ([\d,.]* [K|M|G]?B) in ", description)
-        if not tmp: raise Exception("'downloadSize' not found")
-        downloadSize = self.get_size(tmp[0])
-        debug("downloadSize = '%s'" % downloadSize)
-
-        # Get download ID
-        tmp = r.link.string + ".nzb" # Take the link and add '.nzb' on the end
-        downloadID = tmp.replace("nzb_view", "nzb_get") # Replace view with get for direct nzb access
-        debug("downloadID = '%s'" % downloadID)
-
-        # Get download Age
-        downloadAge = self.get_age(r.pubdate.string[:-6]) # [:-6] to get rid of timezone
-        debug("downloadAge = '%s'" % downloadAge)
+        divs = re.findall(r"<div.*?>(.*?)</div>", item, flags=re.DOTALL)
+        name = striphtmlentities(re.findall(r"<a class=\"text-primary\".*?>(.*?)</a>", divs[0], flags=re.DOTALL)[0])
+        grp = re.findall(r"<a class=\"text-primary-2\".*?>(.*?)</a>", divs[0], flags=re.DOTALL)[0]
+        size = self.get_size(re.findall(r"([\d,.]* [K|M|G]?B)", divs[1])[0])
+        url = self.DOWNLOAD_URL.format(re.findall(r"collectionid=\"(.*?)\"", item)[0])
+        age = str(re.findall(r"([\d.]* [d|h])", divs[2])[0])
+        agenum = int(re.findall(r"([\d.]*)", age)[0])
+        if "h" in age:
+          age = 24/agenum
+        elif "d" in age:
+          age = agenum
       except:
-        extype, exvalue = sys.exc_info()[:2]
-        printl("[!] Error with module: %s (%s)" % (extype,exvalue))
+        print "fail", sys.exc_info()[1]
         continue
-
-      # Create new item and check if we need to add it to the resultList..
-      tmpItem = (downloadName, self.DOWNLOAD_URL % downloadID, downloadSize, downloadGroup, downloadAge)
-      tmp = False
-      for r in resultList:
-        if tmpItem[1] in r:
-          tmp = True
-          break
-      if tmp: # Already in the list so just continue
-        continue
-
-      resultList.append(tmpItem)
-    return resultList
+      results.append((name, url, size, grp, age))
+    return results
 
 
 
@@ -1350,9 +1325,9 @@ class LOCALNEWZNAB(_newznab):
 
 
 ########################################################################
-# N Z B . C C
+# N Z B . C C = DEAD
 ########################################################################
-class NZBCC(searchmodule):
+class _NZBCC(searchmodule):
   """
   NZBCC module v1 by Ashy
   19 Apr 2013 - Initial Release
