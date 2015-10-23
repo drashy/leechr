@@ -1619,7 +1619,7 @@ class MyEpisodes(object):
   ####################################################################
   def login(self):
     """ Login to myeps """
-    url = "http://www.myepisodes.com/login.php"
+    url = "http://www.myepisodes.com/login.php?action=login"
     data = urllib.urlencode({"username":self.username, "password":self.password, "u":"views.php", "action":"Login"})
     req = urllib2.Request(url, data, {"User-Agent":USERAGENT})
     try:
